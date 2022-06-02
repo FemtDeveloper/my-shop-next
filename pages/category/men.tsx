@@ -1,14 +1,14 @@
 import type { NextPage } from "next";
 import { Typography } from "@mui/material";
 import styles from "../styles/Home.module.css";
-import { ShopLayout } from "../components/layouts";
+import { ShopLayout } from "../../components/layouts";
+import { ProductList } from "../../components/products";
+import { FullScreenLoading } from "../../components/ui";
+import { useProducts } from "../../hooks";
 // import { initialData } from "../database/products";
-import { ProductList } from "../components/products";
-import { useProducts } from "../hooks";
-import { FullScreenLoading } from "../components/ui";
 
-const HomePage: NextPage = () => {
-  const { products, isLoading } = useProducts("/products");
+const MenPage: NextPage = () => {
+  const { products, isLoading } = useProducts("/products?gender=men");
 
   return (
     <ShopLayout
@@ -26,4 +26,4 @@ const HomePage: NextPage = () => {
   );
 };
 
-export default HomePage;
+export default MenPage;

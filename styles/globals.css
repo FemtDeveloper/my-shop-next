@@ -1,3 +1,6 @@
+html {
+  background-color: #eaf5ff;
+}
 @keyframes fadeIn {
   0% {
     opacity: 0;

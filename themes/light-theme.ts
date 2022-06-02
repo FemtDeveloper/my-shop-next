@@ -1,11 +1,10 @@
 import { createTheme } from "@mui/material/styles";
-import { red } from "@mui/material/colors";
 
 export const lightTheme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: "#1E1E1E",
+      main: "#e5f3ff",
     },
     secondary: {
       main: "#3A64D8",
@@ -18,6 +17,7 @@ export const lightTheme = createTheme({
     MuiLink: {
       defaultProps: {
         underline: "none",
+        color: "#2c2c2c",
       },
     },
     MuiAppBar: {
@@ -27,7 +27,7 @@ export const lightTheme = createTheme({
       },
       styleOverrides: {
         root: {
-          backgroundColor: "white",
+          backgroundColor: "#c2e3ff",
           height: 60,
         },
       },
@@ -35,6 +35,9 @@ export const lightTheme = createTheme({
 
     MuiTypography: {
       styleOverrides: {
+        root: {
+          color: "#2c2c2c",
+        },
         h1: {
           fontSize: 30,
           fontWeight: 600,
@@ -53,7 +56,7 @@ export const lightTheme = createTheme({
     MuiButton: {
       defaultProps: {
         variant: "contained",
-        size: "small",
+        size: "large",
         disableElevation: true,
         color: "info",
       },
@@ -62,6 +65,8 @@ export const lightTheme = createTheme({
           textTransform: "none",
           boxShadow: "none",
           borderRadius: 10,
+          background: "transparent",
+          color: "#2c2c2c",
           ":hover": {
             backgroundColor: "rgba(0,0,0,0.05)",
             transition: "all 0.3s ease-in-out",
@@ -72,12 +77,16 @@ export const lightTheme = createTheme({
 
     MuiCard: {
       defaultProps: {
-        elevation: 0,
+        elevation: 3,
       },
       styleOverrides: {
         root: {
+          border: "none",
           boxShadow: "0px 5px 5px rgba(0,0,0,0.05)",
           borderRadius: "10px",
+          "&:hover": {
+            backgroundColor: "green",
+          },
         },
       },
     },
