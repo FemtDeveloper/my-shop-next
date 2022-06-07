@@ -4,13 +4,16 @@ export const lightTheme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: "#e5f3ff",
+      main: "#1e1e1e",
     },
     secondary: {
       main: "#3A64D8",
     },
     info: {
       main: "#fff",
+    },
+    success: {
+      main: "#f9f9f900",
     },
   },
   components: {
@@ -65,8 +68,6 @@ export const lightTheme = createTheme({
           textTransform: "none",
           boxShadow: "none",
           borderRadius: 10,
-          background: "transparent",
-          color: "#2c2c2c",
           ":hover": {
             backgroundColor: "rgba(0,0,0,0.05)",
             transition: "all 0.3s ease-in-out",
@@ -77,7 +78,7 @@ export const lightTheme = createTheme({
 
     MuiCard: {
       defaultProps: {
-        elevation: 3,
+        elevation: 1,
       },
       styleOverrides: {
         root: {
@@ -85,7 +86,7 @@ export const lightTheme = createTheme({
           boxShadow: "0px 5px 5px rgba(0,0,0,0.05)",
           borderRadius: "10px",
           "&:hover": {
-            backgroundColor: "green",
+            backgroundColor: "#c2e3ff0d",
           },
         },
       },

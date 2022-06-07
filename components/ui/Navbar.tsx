@@ -18,11 +18,12 @@ import {
 } from "@mui/icons-material";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
-import { UiContext } from "../../context";
+import { CartContext, UiContext } from "../../context";
 
 export const Navbar = () => {
   const { pathname, push } = useRouter();
   const { toggleSideMenu } = useContext(UiContext);
+  const { numberOfItems } = useContext(CartContext);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [isSearchVisible, setIsSearchVisible] = useState(false);
@@ -52,7 +53,9 @@ export const Navbar = () => {
         >
           <NextLink href="/category/men" passHref>
             <Link>
-              <Button color={pathname === "/category/men" ? "primary" : "info"}>
+              <Button
+                color={pathname === "/category/men" ? "primary" : "success"}
+              >
                 Hombres
               </Button>
             </Link>
@@ -60,7 +63,7 @@ export const Navbar = () => {
           <NextLink href="/category/women" passHref>
             <Link>
               <Button
-                color={pathname === "/category/women" ? "primary" : "info"}
+                color={pathname === "/category/women" ? "primary" : "success"}
               >
                 Mujeres
               </Button>
@@ -69,7 +72,7 @@ export const Navbar = () => {
           <NextLink href="/category/kids" passHref>
             <Link>
               <Button
-                color={pathname === "/category/kids" ? "primary" : "info"}
+                color={pathname === "/category/kids" ? "primary" : "success"}
               >
                 Niños/as
               </Button>
@@ -114,13 +117,15 @@ export const Navbar = () => {
         <NextLink href="/cart" passHref>
           <Link>
             <IconButton>
-              <Badge badgeContent={2} color="secondary">
+              <Badge badgeContent={numberOfItems} color="secondary">
                 <ShoppingCartOutlined />
               </Badge>
             </IconButton>
           </Link>
         </NextLink>
-        <Button onClick={toggleSideMenu}>Menú</Button>
+        <Button color="success" onClick={toggleSideMenu}>
+          Menú
+        </Button>
       </Toolbar>
     </AppBar>
   );

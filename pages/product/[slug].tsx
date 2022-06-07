@@ -12,6 +12,9 @@ interface Props {
 }
 
 const ProductPage: NextPage<Props> = ({ product }) => {
+  const { addProductToCart } = useContext(CartContext);
+  const router = useRouter();
+
   const [tempCartProduct, setTempCartProduct] = useState<ICartProduct>({
     _id: product._id,
     image: product.images[0],
@@ -28,6 +31,19 @@ const ProductPage: NextPage<Props> = ({ product }) => {
       ...currentProduct,
       size: size,
     }));
+  };
+
+  const onUpdateQuantity = (quantity: number) => {
+    setTempCartProduct((currentProduct) => ({
+      ...currentProduct,
+      quantity,
+    }));
+  };
+
+  const onAddProduct = () => {
+    if (!tempCartProduct.size) return;
+    addProductToCart(tempCartProduct);
+    // router.push("/cart");
   };
 
   return (
@@ -51,7 +67,11 @@ const ProductPage: NextPage<Props> = ({ product }) => {
             {/* Cantidad */}
             <Box sx={{ my: 2 }}>
               <Typography variant="subtitle2">Cantidad</Typography>
-              <ItemCounter />
+              <ItemCounter
+                currentValue={tempCartProduct.quantity}
+                updateQuantity={onUpdateQuantity}
+                maxValue={product.inStock > 10 ? 10 : product.inStock}
+              />
               <SizeSelector
                 selectedSize={tempCartProduct.size}
                 sizes={product.sizes}
@@ -59,7 +79,11 @@ const ProductPage: NextPage<Props> = ({ product }) => {
               />
             </Box>
             {product.inStock ? (
-              <Button color="secondary" className="circular-btn">
+              <Button
+                color="secondary"
+                className="circular-btn"
+                onClick={onAddProduct}
+              >
                 {tempCartProduct.size
                   ? "Agregar al carrito"
                   : "Seleccionar una talla"}
@@ -132,7 +156,9 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
 //- The data can be publicly cached (not user-specific).
 //- The page must be pre-rendered (for SEO) and be very fast — getStaticProps generates HTML and JSON files, both of which can be cached by a CDN for performance.
 import { GetStaticProps } from "next";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { useRouter } from "next/router";
+import { CartContext } from "../../context/cart";
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { slug = "" } = params as { slug: string };

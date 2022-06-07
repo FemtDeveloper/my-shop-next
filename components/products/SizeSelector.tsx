@@ -20,7 +20,7 @@ export const SizeSelector: FC<Props> = ({
         <Button
           size="small"
           key={size}
-          color={selectedSize === size ? "primary" : "info"}
+          color={selectedSize === size ? "primary" : "success"}
           onClick={() => onSelectedSize(size)}
         >
           {size}

@@ -1,3 +1,6 @@
+import React from "react";
+import { GetServerSideProps } from "next";
+
 import NextLink from "next/link";
 import {
   Box,
@@ -9,9 +12,9 @@ import {
   Link,
   Typography,
 } from "@mui/material";
-import React from "react";
 import { CartList, OrderSummary } from "../../components/cart";
 import { ShopLayout } from "../../components/layouts";
+import { jwt } from "../../utils";
 
 const SummaryPage = () => {
   return (
@@ -60,6 +63,30 @@ const SummaryPage = () => {
       </Grid>
     </ShopLayout>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const { token = "" } = req.cookies;
+  let userId = "";
+  let isValidToken = false;
+  try {
+    userId = await jwt.isValidToken(token);
+    isValidToken = true;
+  } catch (error) {
+    isValidToken = false;
+  }
+  if (!isValidToken) {
+    return {
+      redirect: {
+        destination: "/auth/login?p=/checkout/summary",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
 };
 
 export default SummaryPage;
