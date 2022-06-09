@@ -14,7 +14,7 @@ import { ShopLayout } from "../../components/layouts";
 import { CartContext } from "../../context";
 
 const CartPage = () => {
-  const { isLoaded, cart } = useContext(CartContext);
+  const { isLoaded, cart, numberOfItems } = useContext(CartContext);
   const router = useRouter();
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const CartPage = () => {
 
   return (
     <ShopLayout
-      title="Carrito de compras - 3"
+      title={`Carrito de compras ${numberOfItems}`}
       pageDescription="Carrito de compras de la tienda"
     >
       <Typography variant="h1" component="h1">
