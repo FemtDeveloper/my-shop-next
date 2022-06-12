@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { GetServerSideProps } from "next";
+import React, { useContext, useEffect, useState } from "react";
+// import { GetServerSideProps } from "next";
 
 import NextLink from "next/link";
 import {
@@ -7,6 +7,7 @@ import {
   Button,
   Card,
   CardContent,
+  Chip,
   Divider,
   Grid,
   Link,
@@ -16,9 +17,23 @@ import { CartList, OrderSummary } from "../../components/cart";
 import { ShopLayout } from "../../components/layouts";
 import { countries, jwt } from "../../utils";
 import { CartContext } from "../../context";
+import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 const SummaryPage = () => {
-  const { shippingAddress, numberOfItems } = useContext(CartContext);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isPosting, setIsPosting] = useState(false);
+
+  const { shippingAddress, numberOfItems, createOrder } =
+    useContext(CartContext);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!Cookies.get("firstName")) {
+      router.push("/checkout/address");
+    }
+  }, [router]);
+
   if (!shippingAddress) {
     return <></>;
   }
@@ -32,6 +47,16 @@ const SummaryPage = () => {
     country,
     city,
   } = shippingAddress;
+  const onCreateOrder = async () => {
+    setIsPosting(true);
+    const { hasError, message } = await createOrder();
+    if (hasError) {
+      setIsPosting(false);
+      setErrorMessage(message);
+      return;
+    }
+    router.replace(`/orders/${message}`);
+  };
 
   return (
     <ShopLayout
@@ -77,10 +102,21 @@ const SummaryPage = () => {
                 </NextLink>
               </Box>
               <OrderSummary />
-              <Box sx={{ mt: 2 }}>
-                <Button color="secondary" className="circular-btn" fullWidth>
+              <Box sx={{ mt: 2 }} display="flex" flexDirection="column">
+                <Button
+                  color="secondary"
+                  className="circular-btn"
+                  fullWidth
+                  onClick={onCreateOrder}
+                  disabled={isPosting}
+                >
                   Confirmar orden
-                </Button>{" "}
+                </Button>
+                <Chip
+                  label={errorMessage}
+                  color="error"
+                  sx={{ display: errorMessage ? "flex" : "none", mt: 2 }}
+                />
               </Box>
             </CardContent>
           </Card>
@@ -90,28 +126,28 @@ const SummaryPage = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const { token = "" } = req.cookies;
-  let userId = "";
-  let isValidToken = false;
-  try {
-    userId = await jwt.isValidToken(token);
-    isValidToken = true;
-  } catch (error) {
-    isValidToken = false;
-  }
-  if (!isValidToken) {
-    return {
-      redirect: {
-        destination: "/auth/login?p=/checkout/summary",
-        permanent: false,
-      },
-    };
-  }
+// export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+//   const { token = "" } = req.cookies;
+//   let userId = "";
+//   let isValidToken = false;
+//   try {
+//     userId = await jwt.isValidToken(token);
+//     isValidToken = true;
+//   } catch (error) {
+//     isValidToken = false;
+//   }
+//   if (!isValidToken) {
+//     return {
+//       redirect: {
+//         destination: "/auth/login?p=/checkout/summary",
+//         permanent: false,
+//       },
+//     };
+//   }
 
-  return {
-    props: {},
-  };
-};
+//   return {
+//     props: {},
+//   };
+// };
 
 export default SummaryPage;

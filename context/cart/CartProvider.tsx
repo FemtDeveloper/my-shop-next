@@ -1,8 +1,9 @@
 import { FC, useEffect, useReducer } from "react";
 import Cookie from "js-cookie";
-// import { ICartProduct } from '../../interfaces/cart';
-import { ICartProduct } from "../../interfaces";
+import { ICartProduct, IOrder, ShippingAddress } from "../../interfaces";
 import { CartContext, cartReducer } from "./";
+import { tesloApi } from "../../api";
+import axios from "axios";
 
 export interface CartState {
   isLoaded: boolean;
@@ -13,16 +14,6 @@ export interface CartState {
   tax: number;
   total: number;
   shippingAddress?: ShippingAddress;
-}
-export interface ShippingAddress {
-  firstName: string;
-  lastName: string;
-  address: string;
-  address2?: string;
-  zip: string;
-  city: string;
-  country: string;
-  phone: string;
 }
 
 const CART_INITIAL_STATE: CartState = {
@@ -149,15 +140,63 @@ export const CartProvider: FC<CartState> = ({ children }) => {
     Cookie.set("phone", address.phone);
     dispatch({ type: "[Cart] - Update address", payload: address });
   };
+  const createOrder = async (): Promise<{
+    hasError: boolean;
+    message: string;
+  }> => {
+    if (!state.shippingAddress) {
+      throw new Error("No hay direeción de entrega");
+    }
+    const body: IOrder = {
+      orderItems: state.cart.map((product) => ({
+        ...product,
+        size: product.size!,
+      })),
+      shippingAddress: state.shippingAddress,
+      numberOfItems: state.numberOfItems,
+      subTotal: state.subTotal,
+      tax: state.tax,
+      total: state.total,
+      isPaid: false,
+    };
+
+    try {
+      const { data } = await tesloApi.post<IOrder>("/orders", body);
+
+      console.log({ data });
+      dispatch({ type: "[Cart] - Order complete" });
+      return {
+        hasError: false,
+        message: data._id!,
+      };
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log(error);
+        return {
+          hasError: true,
+          // message:error.response?.data.message
+          message: "Inconsistencias con el valor a pagar",
+        };
+      }
+      return {
+        hasError: true,
+        message: "Error no controlado, contacte con el administrador",
+      };
+    }
+  };
 
   return (
     <CartContext.Provider
       value={{
         ...state,
+        // Methods
         addProductToCart,
         updateCartQuantity,
         removeCartProduct,
         updateAddress,
+
+        //order
+        createOrder,
       }}
     >
       {children}

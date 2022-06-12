@@ -1,9 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { GetServerSideProps } from "next";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
+import { getSession, signIn, getProviders } from "next-auth/react";
 import {
   Box,
   Button,
   Chip,
+  Divider,
   Grid,
   Link,
   TextField,
@@ -12,10 +16,9 @@ import {
 import { AuthLayout } from "../../components/layouts";
 import { useForm } from "react-hook-form";
 import { validations } from "../../utils";
-import { tesloApi } from "../../api";
+// import { tesloApi } from "../../api";
 import { ErrorOutline } from "@mui/icons-material";
-import { AuthContext } from "../../context";
-import { useRouter } from "next/router";
+// import { AuthContext } from "../../context";
 
 type FormData = {
   email: string;
@@ -23,9 +26,19 @@ type FormData = {
 };
 
 const LoginPage = () => {
-  const { loginUser } = useContext(AuthContext);
+  // const { loginUser } = useContext(AuthContext);
   const [showError, setShowError] = useState(false);
+  const [providers, setProviders] = useState<any>({});
+
   const router = useRouter();
+
+  useEffect(() => {
+    getProviders().then((prov) => {
+      console.log(prov);
+
+      setProviders(prov);
+    });
+  }, []);
 
   const {
     register,
@@ -36,16 +49,18 @@ const LoginPage = () => {
   const onLoginUser = async ({ email, password }: FormData) => {
     setShowError(false);
 
-    const isValidLogin = await loginUser(email, password);
-    if (!isValidLogin) {
-      setShowError(true);
-      setTimeout(() => {
-        setShowError(false);
-      }, 3000);
-      return;
-    }
-    const destination = router.query.p?.toString() || "/";
-    router.replace(destination);
+    await signIn("credentials", { email, password });
+
+    // const isValidLogin = await loginUser(email, password);
+    // if (!isValidLogin) {
+    //   setShowError(true);
+    //   setTimeout(() => {
+    //     setShowError(false);
+    //   }, 3000);
+    //   return;
+    // }
+    // const destination = router.query.p?.toString() || "/";
+    // router.replace(destination);
   };
 
   return (
@@ -116,11 +131,59 @@ const LoginPage = () => {
                 <Link underline="always">¿No tienes cuenta?</Link>
               </NextLink>
             </Grid>
+            <Grid
+              item
+              xs={12}
+              display="flex"
+              justifyContent="end"
+              flexDirection="column"
+            >
+              <Divider sx={{ width: "100%", mb: 2 }} />
+              {Object.values(providers).map((provider: any) => {
+                if (provider.id === "credentials")
+                  return <div key="credentials"></div>;
+
+                return (
+                  <Button
+                    key={provider.id}
+                    variant="outlined"
+                    fullWidth
+                    color="primary"
+                    sx={{ mb: 2 }}
+                    onClick={() => signIn(provider.id)}
+                  >
+                    {provider.name}
+                  </Button>
+                );
+              })}
+            </Grid>
           </Grid>
         </Box>
       </form>
     </AuthLayout>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  query,
+}) => {
+  const session = await getSession({ req });
+
+  const { p = "/" } = query;
+
+  if (session) {
+    return {
+      redirect: {
+        destination: p.toString(),
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
 };
 
 export default LoginPage;

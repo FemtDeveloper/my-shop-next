@@ -21,14 +21,11 @@ const AUTH_INITIAL_STATE: AuthState = {
 export const AuthProvider: FC<AuthState> = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, AUTH_INITIAL_STATE);
   const { data, status } = useSession();
-  console.log(data);
+  // console.log(data);
   const router = useRouter();
 
   useEffect(() => {
     if (status === "authenticated") {
-      console.log({ user: data?.user });
-      console.log({ status });
-
       dispatch({ type: "[Auth] - Login", payload: data?.user as IUser });
     }
   }, [status, data]);
@@ -109,7 +106,7 @@ export const AuthProvider: FC<AuthState> = ({ children }) => {
     Cookies.remove("phone");
 
     signOut();
-    router.reload();
+    // router.reload();
   };
 
   return (

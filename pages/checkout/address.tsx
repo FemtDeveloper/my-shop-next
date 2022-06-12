@@ -1,12 +1,13 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import Cookies from "js-cookie";
 import {
   Box,
   Button,
   FormControl,
+  FormHelperText,
   Grid,
   InputLabel,
   MenuItem,
@@ -45,13 +46,20 @@ const getAddressFromCookies = (): FormData => {
 const AddressPage = (data: FormData) => {
   const { updateAddress } = useContext(CartContext);
   const router = useRouter();
+
   const {
+    control,
     register,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
-    defaultValues: getAddressFromCookies(),
+    defaultValues: { ...getAddressFromCookies() },
   });
+
+  useEffect(() => {
+    reset(getAddressFromCookies());
+  }, [reset]);
 
   const onSubmitAddress = (data: FormData) => {
     updateAddress(data);
@@ -136,7 +144,7 @@ const AddressPage = (data: FormData) => {
               helperText={errors.city?.message}
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{ mt: 2 }}>
+          {/* <Grid item xs={12} sm={6} sx={{ mt: 2 }}>
             <FormControl fullWidth>
               <TextField
                 select
@@ -156,6 +164,26 @@ const AddressPage = (data: FormData) => {
                 ))}
               </TextField>
             </FormControl>
+          </Grid> */}
+          <Grid item xs={12} sm={6} sx={{ mt: 2 }}>
+            <Controller
+              name="country"
+              control={control}
+              defaultValue={""}
+              render={({ field }) => (
+                <FormControl fullWidth error={!!errors.country}>
+                  <InputLabel>Country</InputLabel>
+                  <Select {...field} label="Country">
+                    {countries.map((country) => (
+                      <MenuItem key={country.code} value={country.code}>
+                        {country.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  <FormHelperText>{errors.country?.message}</FormHelperText>
+                </FormControl>
+              )}
+            />
           </Grid>
           <Grid item xs={12} sm={6} sx={{ mt: 2 }}>
             <TextField
@@ -188,28 +216,28 @@ const AddressPage = (data: FormData) => {
 // You should use getServerSideProps when:
 // - Only if you need to pre-render a page whose data must be fetched at request time
 
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const { token = "" } = req.cookies;
-  let userId = "";
-  let isValidToken = false;
-  try {
-    userId = await jwt.isValidToken(token);
-    isValidToken = true;
-  } catch (error) {
-    isValidToken = false;
-  }
-  if (!isValidToken) {
-    return {
-      redirect: {
-        destination: "/auth/login?p=/checkout/address",
-        permanent: false,
-      },
-    };
-  }
+// export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+//   const { token = "" } = req.cookies;
+//   let userId = "";
+//   let isValidToken = false;
+//   try {
+//     userId = await jwt.isValidToken(token);
+//     isValidToken = true;
+//   } catch (error) {
+//     isValidToken = false;
+//   }
+//   if (!isValidToken) {
+//     return {
+//       redirect: {
+//         destination: "/auth/login?p=/checkout/address",
+//         permanent: false,
+//       },
+//     };
+//   }
 
-  return {
-    props: {},
-  };
-};
+//   return {
+//     props: {},
+//   };
+// };
 
 export default AddressPage;

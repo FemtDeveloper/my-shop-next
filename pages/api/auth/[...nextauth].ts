@@ -37,10 +37,20 @@ export default NextAuth({
       clientSecret: process.env.GITHUB_SECRET,
     }),
     GoogleProvider({
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientId: process.env.GOOGLE_ID as string,
+      clientSecret: process.env.GOOGLE_SECRET as string,
     }),
   ],
+  pages: {
+    signIn: "/auth/login",
+    newUser: "/auth/register",
+  },
+  session: {
+    maxAge: 2592000, // cada 30d
+    strategy: "jwt",
+    updateAge: 86400, // cada 24h
+  },
+
   callbacks: {
     async jwt({ token, account, user }) {
       // console.log({ token, account, user });
