@@ -1,6 +1,6 @@
-# Next.js Telo Shop
+# Next.js TesloShop App
 
-Para correr localmente, se necesita la base de datos.
+Para correr localmente, se necesita la base de datos
 
 ```
 docker-compose up -d

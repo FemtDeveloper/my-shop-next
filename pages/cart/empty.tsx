@@ -7,7 +7,7 @@ import { ShopLayout } from "../../components/layouts"
 
 const EmptyPage = () => {
   return (
-    <ShopLayout title="Carrito vació" pageDescription="No hay artículos en el carrito de compras">
+    <ShopLayout title="Carrito vacio" pageDescription="No hay artículos en el carrito de compras">
          <Box 
             display='flex' 
             justifyContent='center' 
