@@ -16,11 +16,7 @@ import {
   Typography,
 } from "@mui/material";
 import { ShopLayout } from "../../components/layouts";
-<<<<<<< HEAD
 import { countries } from "../../utils";
-=======
-import { countries, jwt } from "../../utils";
->>>>>>> 5751549a0b794882a1142dcf0b5aa7d3dbdbed0a
 import { CartContext } from "../../context";
 
 type FormData = {
@@ -42,11 +38,7 @@ const getAddressFromCookies = (): FormData => {
     address2: Cookies.get("address2") || "",
     zip: Cookies.get("zip") || "",
     city: Cookies.get("city") || "",
-<<<<<<< HEAD
     country: "",
-=======
-    country: Cookies.get("country") || "",
->>>>>>> 5751549a0b794882a1142dcf0b5aa7d3dbdbed0a
     phone: Cookies.get("phone") || "",
   };
 };
@@ -152,31 +144,6 @@ const AddressPage = (data: FormData) => {
               helperText={errors.city?.message}
             />
           </Grid>
-<<<<<<< HEAD
-
-=======
-          {/* <Grid item xs={12} sm={6} sx={{ mt: 2 }}>
-            <FormControl fullWidth>
-              <TextField
-                select
-                variant="filled"
-                label="País"
-                defaultValue={Cookies.get("country") || countries[0].code}
-                {...register("country", {
-                  required: "Este campo es requerido",
-                })}
-                error={!!errors.country}
-                // helperText={errors.country?.message}
-              >
-                {countries.map((country) => (
-                  <MenuItem key={country.code} value={country.code}>
-                    {country.name}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </FormControl>
-          </Grid> */}
->>>>>>> 5751549a0b794882a1142dcf0b5aa7d3dbdbed0a
           <Grid item xs={12} sm={6} sx={{ mt: 2 }}>
             <Controller
               name="country"
@@ -185,7 +152,6 @@ const AddressPage = (data: FormData) => {
               render={({ field }) => (
                 <FormControl fullWidth error={!!errors.country}>
                   <InputLabel>Country</InputLabel>
-<<<<<<< HEAD
                   <Select
                     {...field}
                     label="Country"
@@ -193,9 +159,6 @@ const AddressPage = (data: FormData) => {
                       required: "Este campo es requerido",
                     })}
                   >
-=======
-                  <Select {...field} label="Country">
->>>>>>> 5751549a0b794882a1142dcf0b5aa7d3dbdbed0a
                     {countries.map((country) => (
                       <MenuItem key={country.code} value={country.code}>
                         {country.name}

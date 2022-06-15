@@ -56,10 +56,7 @@ const SummaryPage = () => {
       return;
     }
     router.replace(`/orders/${message}`);
-<<<<<<< HEAD
     Cookies.remove("cart");
-=======
->>>>>>> 5751549a0b794882a1142dcf0b5aa7d3dbdbed0a
   };
 
   return (
