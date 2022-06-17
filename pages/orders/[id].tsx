@@ -1,35 +1,31 @@
-import NextLink from "next/link";
+import { useState } from "react";
 import { GetServerSideProps, NextPage } from "next";
+import { getSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { PayPalButtons } from "@paypal/react-paypal-js";
+
 import {
   Box,
-  Button,
   Card,
   CardContent,
-  Chip,
-  CircularProgress,
   Divider,
   Grid,
-  Link,
   Typography,
+  Chip,
+  CircularProgress,
 } from "@mui/material";
-import React, { useState } from "react";
-import { CartList, OrderSummary } from "../../components/cart";
-import { ShopLayout } from "../../components/layouts";
 import {
   CreditCardOffOutlined,
   CreditScoreOutlined,
 } from "@mui/icons-material";
-import { getSession } from "next-auth/react";
+
+import { ShopLayout } from "../../components/layouts/ShopLayout";
+import { CartList, OrderSummary } from "../../components/cart";
 import { dbOrders } from "../../database";
 import { IOrder } from "../../interfaces";
 import { tesloApi } from "../../api";
-import { useRouter } from "next/router";
 
-interface Props {
-  order: IOrder;
-}
-interface OrderResponseBody {
+export type OrderResponseBody = {
   id: string;
   status:
     | "COMPLETED"
@@ -37,36 +33,42 @@ interface OrderResponseBody {
     | "APPROVED"
     | "VOIDED"
     | "PAYER_ACTION_REQUIRED";
+};
+
+interface Props {
+  order: IOrder;
 }
 
 const OrderPage: NextPage<Props> = ({ order }) => {
   const router = useRouter();
-  const [isPaying, setIsPaying] = useState(false);
-
   const { shippingAddress } = order;
+  const [isPaying, setIsPaying] = useState(false);
 
   const onOrderCompleted = async (details: OrderResponseBody) => {
     if (details.status !== "COMPLETED") {
-      return alert("No se ha completado el pago en Paypal");
+      return alert("No hay pago en Paypal");
     }
+
     setIsPaying(true);
+
     try {
       const { data } = await tesloApi.post(`/orders/pay`, {
         transactionId: details.id,
         orderId: order._id,
       });
+
       router.reload();
     } catch (error) {
-      console.log(error);
       setIsPaying(false);
-      alert("Error: " + error);
+      console.log(error);
+      alert("Error");
     }
   };
 
   return (
     <ShopLayout
-      title="Resumen de la Orden"
-      pageDescription="Resumen de la Compra"
+      title="Resumen de la orden"
+      pageDescription={"Resumen de la orden"}
     >
       <Typography variant="h1" component="h1">
         Orden: {order._id}
@@ -77,7 +79,7 @@ const OrderPage: NextPage<Props> = ({ order }) => {
           sx={{ my: 2 }}
           label="Orden ya fue pagada"
           variant="outlined"
-          color="primary"
+          color="secondary"
           icon={<CreditScoreOutlined />}
         />
       ) : (
@@ -90,7 +92,7 @@ const OrderPage: NextPage<Props> = ({ order }) => {
         />
       )}
 
-      <Grid container mt={3} className="fadeIn">
+      <Grid container className="fadeIn">
         <Grid item xs={12} sm={7}>
           <CartList products={order.orderItems} />
         </Grid>
@@ -98,59 +100,66 @@ const OrderPage: NextPage<Props> = ({ order }) => {
           <Card className="summary-card">
             <CardContent>
               <Typography variant="h2">
-                Resumen (<b> {order.numberOfItems}</b>
-                {order.numberOfItems > 1 ? " Productos" : " Producto"} )
+                Resumen ({order.numberOfItems}{" "}
+                {order.numberOfItems > 1 ? "productos" : "producto"})
               </Typography>
-              <Divider sx={{ marginY: 2 }} />
-              <Box display="flex" justifyContent="end">
-                <NextLink href="/checkout/address" passHref>
-                  <Link underline="always">Editar</Link>
-                </NextLink>
+              <Divider sx={{ my: 1 }} />
+
+              <Box display="flex" justifyContent="space-between">
+                <Typography variant="subtitle1">
+                  Dirección de entrega
+                </Typography>
               </Box>
-              <Typography variant="subtitle1">Dirección de Entrega</Typography>
+
               <Typography>
-                {shippingAddress.firstName} {shippingAddress.lastName}{" "}
+                {shippingAddress.firstName} {shippingAddress.lastName}
               </Typography>
               <Typography>
-                {shippingAddress.address}
+                {shippingAddress.address}{" "}
                 {shippingAddress.address2
                   ? `, ${shippingAddress.address2}`
                   : ""}
               </Typography>
-              <Typography>Código Postal: {shippingAddress.zip} </Typography>
               <Typography>
-                {shippingAddress.city}, {shippingAddress.country}
+                {shippingAddress.city}, {shippingAddress.zip}
               </Typography>
+              <Typography>{shippingAddress.country}</Typography>
               <Typography>{shippingAddress.phone}</Typography>
-              <Divider sx={{ marginY: 2 }} />
+
+              <Divider sx={{ my: 1 }} />
 
               <OrderSummary
                 orderValues={{
                   numberOfItems: order.numberOfItems,
-                  tax: order.tax,
                   subTotal: order.subTotal,
                   total: order.total,
+                  tax: order.tax,
                 }}
               />
-              <Box sx={{ mt: 2 }} display="flex" flexDirection="column">
+
+              <Box sx={{ mt: 3 }} display="flex" flexDirection="column">
+                {/* TODO */}
+
                 <Box
                   display="flex"
                   justifyContent="center"
+                  className="fadeIn"
                   sx={{ display: isPaying ? "flex" : "none" }}
                 >
                   <CircularProgress />
                 </Box>
 
                 <Box
-                  sx={{ display: isPaying ? "none" : "flex" }}
                   flexDirection="column"
+                  sx={{ display: isPaying ? "none" : "flex", flex: 1 }}
                 >
                   {order.isPaid ? (
                     <Chip
-                      sx={{ marginY: 2 }}
-                      label="Pagada"
+                      sx={{ my: 2 }}
+                      label="Orden ya fue pagada"
+                      variant="outlined"
                       color="secondary"
-                      icon={<CreditCardOffOutlined />}
+                      icon={<CreditScoreOutlined />}
                     />
                   ) : (
                     <PayPalButtons
@@ -159,7 +168,7 @@ const OrderPage: NextPage<Props> = ({ order }) => {
                           purchase_units: [
                             {
                               amount: {
-                                value: `${Math.round(order.total * 100) / 100}`,
+                                value: `${order.total}`,
                               },
                             },
                           ],
@@ -168,8 +177,9 @@ const OrderPage: NextPage<Props> = ({ order }) => {
                       onApprove={(data, actions) => {
                         return actions.order!.capture().then((details) => {
                           onOrderCompleted(details);
-
-                          console.log({ details });
+                          // console.log({ details  })
+                          // const name = details.payer.name.given_name;
+                          // alert(`Transaction completed by ${name}`);
                         });
                       }}
                     />
@@ -183,6 +193,10 @@ const OrderPage: NextPage<Props> = ({ order }) => {
     </ShopLayout>
   );
 };
+
+// You should use getServerSideProps when:
+// - Only if you need to pre-render a page whose data must be fetched at request time
+
 export const getServerSideProps: GetServerSideProps = async ({
   req,
   query,
@@ -200,6 +214,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   }
 
   const order = await dbOrders.getOrderById(id.toString());
+
   if (!order) {
     return {
       redirect: {
@@ -208,6 +223,7 @@ export const getServerSideProps: GetServerSideProps = async ({
       },
     };
   }
+
   if (order.user !== session.user._id) {
     return {
       redirect: {
@@ -218,7 +234,9 @@ export const getServerSideProps: GetServerSideProps = async ({
   }
 
   return {
-    props: { order },
+    props: {
+      order,
+    },
   };
 };
 

@@ -1,84 +1,92 @@
-import NextAuth from "next-auth";
-import Credentials from "next-auth/providers/credentials";
-import GithubProvider from "next-auth/providers/github";
-import GoogleProvider from "next-auth/providers/google";
+import NextAuth from 'next-auth';
+import GithubProvider from 'next-auth/providers/github';
+import Credentials from 'next-auth/providers/credentials';
 
-import { dbUsers } from "../../../database";
+import { dbUsers } from '../../../database';
 
 export default NextAuth({
   // Configure one or more authentication providers
   providers: [
+    
     // ...add more providers here
+
     Credentials({
-      name: "Custom login",
+      name: 'Custom Login',
       credentials: {
-        email: {
-          label: "Email",
-          type: "email",
-          placeholder: "Ingresa tu correo",
-        },
-        password: {
-          label: "Contraseña",
-          type: "password",
-          placeholder: "Ingresa tu contraseña",
-        },
+        email: { label: 'Correo:', type: 'email', placeholder: 'correo@google.com'  },
+        password: { label: 'Contraseña:', type: 'password', placeholder: 'Contraseña'  },
       },
       async authorize(credentials) {
-        console.log({ credentials });
+        console.log({credentials})
+        // return { name: 'Juan', correo: 'juan@google.com', role: 'admin' };
 
-        return dbUsers.checkUserEmailPassword(
-          credentials!.email,
-          credentials!.password
-        );
-      },
+        return await dbUsers.checkUserEmailPassword( credentials!.email, credentials!.password );
+
+      }
     }),
+
+
     GithubProvider({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
     }),
-    GoogleProvider({
-      clientId: process.env.GOOGLE_ID as string,
-      clientSecret: process.env.GOOGLE_SECRET as string,
-    }),
+
+
   ],
+
+  // Custom Pages
   pages: {
-    signIn: "/auth/login",
-    newUser: "/auth/register",
+    signIn: '/auth/login',
+    newUser: '/auth/register'
   },
+
+  // Callbacks
+  jwt: {
+    // secret: process.env.JWT_SECRET_SEED, // deprecated
+  },
+  
   session: {
-    maxAge: 2592000, // cada 30d
-    strategy: "jwt",
-    updateAge: 86400, // cada 24h
+    maxAge: 2592000, /// 30d
+    strategy: 'jwt',
+    updateAge: 86400, // cada día
   },
+
 
   callbacks: {
+
     async jwt({ token, account, user }) {
       // console.log({ token, account, user });
-      if (account) {
+
+      if ( account ) {
         token.accessToken = account.access_token;
 
-        switch (account.type) {
-          case "oauth":
-            token.user = await dbUsers.oAUthToDbUser(
-              user?.email || "",
-              user?.name || ""
-            );
-            break;
-          case "credentials":
+        switch( account.type ) {
+
+          case 'oauth': 
+            token.user = await dbUsers.oAUthToDbUser( user?.email || '', user?.name || '' );
+          break;
+
+          case 'credentials':
             token.user = user;
-            break;
+          break;
         }
+
       }
 
       return token;
     },
-    async session({ token, session, user }) {
-      // console.log({ token, session, user });
+
+
+    async session({ session, token, user }){
+      // console.log({ session, token, user });
 
       session.accessToken = token.accessToken;
       session.user = token.user as any;
 
       return session;
-    },
-  },
+    }
+    
+
+  }
+
 });
