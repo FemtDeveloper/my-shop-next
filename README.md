@@ -18,6 +18,13 @@ Renombrar el archivo **.env.template** a **.env**
 MONGO_URL=mongodb://localhost:27017/teslodb
 ```
 
+- Reconstruir los módulos de node y levantar Next
+
+```
+yarn install
+yarn dev
+```
+
 ## Llenar la base de datos con información de pruebas
 
 Llamara:

@@ -16,6 +16,8 @@ export interface IOrder {
   paidAt?: string;
 
   transactionId?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface IOrderItem {
@@ -24,8 +26,8 @@ export interface IOrderItem {
   size: ISize;
   quantity: number;
   slug: string;
-  price: number;
   image: string;
+  price: number;
   gender: string;
 }
 

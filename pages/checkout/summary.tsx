@@ -47,6 +47,7 @@ const SummaryPage = () => {
     }
 
     router.replace(`/orders/${message}`);
+    Cookies.remove("cart");
   };
 
   if (!shippingAddress) {
