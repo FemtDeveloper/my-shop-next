@@ -48,7 +48,7 @@ const ProductsPage = () => {
 
   if (!data && !error) return <></>;
 
-  const rows = data!.map((product) => ({
+  const rows = data!.map((product: IProduct) => ({
     id: product._id,
     img: product.images[0],
     title: product.title,
@@ -56,7 +56,7 @@ const ProductsPage = () => {
     type: product.type,
     inStock: product.inStock,
     price: product.price,
-    sizes: product.sizes.join(", "),
+    sizes: product.sizes.join(" - "),
     slug: product.slug,
   }));
 

@@ -35,7 +35,7 @@ async function getProductBySlug(
     });
   }
 
-  product.images = product.images.map((image) => {
+  product.images = product.images.map((image: any) => {
     return image.includes("http")
       ? image
       : `${process.env.HOST_NAME}products/${image}`;

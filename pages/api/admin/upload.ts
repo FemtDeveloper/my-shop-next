@@ -1,72 +1,120 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
-import formidable from 'formidable';
-import fs from 'fs';
+import type { NextApiRequest, NextApiResponse } from "next";
+import formidable from "formidable";
+import fs from "fs";
 
-import { v2 as cloudinary } from 'cloudinary';
-cloudinary.config( process.env.CLOUDINARY_URL || '' );
-
+import { v2 as cloudinary } from "cloudinary";
+cloudinary.config(process.env.CLOUDINARY_URL || "");
 
 type Data = {
-    message: string
-}
+  message: string;
+};
 
 export const config = {
-    api: {
-        bodyParser: false,
-    }
+  api: {
+    bodyParser: false,
+  },
+};
+
+export default function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<Data>
+) {
+  switch (req.method) {
+    case "POST":
+      return uploadFile(req, res);
+
+    default:
+      res.status(400).json({ message: "Bad request" });
+  }
 }
 
+const saveFile = async (file: formidable.File): Promise<string> => {
+  // const data = fs.readFileSync( file.filepath );
+  // fs.writeFileSync(`./public/${ file.originalFilename }`, data);
+  // fs.unlinkSync( file.filepath ); // elimina
+  // return;
+  const { secure_url } = await cloudinary.uploader.upload(file.filepath);
+  return secure_url;
+};
 
-export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
-    
-    switch (req.method) {
-        case 'POST':
-            return uploadFile(req, res);
-    
-        default:
-            res.status(400).json({ message: 'Bad request' });
-    }
+const parseFiles = async (req: NextApiRequest): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const form = new formidable.IncomingForm();
+    form.parse(req, async (err, fields, files) => {
+      // console.log({ err, fields, files });
 
-}
+      if (err) {
+        return reject(err);
+      }
 
+      const filePath = await saveFile(files.file as formidable.File);
+      resolve(filePath);
+    });
+  });
+};
 
-const saveFile = async( file: formidable.File ): Promise<string> => {
+const uploadFile = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+  const imageUrl = await parseFiles(req);
 
-    // const data = fs.readFileSync( file.filepath );
-    // fs.writeFileSync(`./public/${ file.originalFilename }`, data);
-    // fs.unlinkSync( file.filepath ); // elimina
-    // return;
-    const { secure_url } = await cloudinary.uploader.upload( file.filepath );
-    return secure_url;
+  return res.status(200).json({ message: imageUrl });
+};
 
-}
+// import type { NextApiRequest, NextApiResponse } from "next";
+// import formidable from "formidable";
+// import fs from "fs";
+// import { v2 as cloudinary } from "cloudinary";
+// cloudinary.config(process.env.CLOUDINARY_URL || "");
 
+// type Data = {
+//   message: string;
+// };
 
-const parseFiles = async(req: NextApiRequest): Promise<string> => {
+// export const config = {
+//   api: {
+//     bodyParser: false,
+//   },
+// };
 
-    return new Promise( (resolve, reject) => {
+// export default function handler(
+//   req: NextApiRequest,
+//   res: NextApiResponse<Data>
+// ) {
+//   switch (req.method) {
+//     case "POST":
+//       return uploadFile(req, res);
 
-        const form = new formidable.IncomingForm();
-        form.parse( req, async( err, fields, files ) => {
-            // console.log({ err, fields, files });
+//     default:
+//       res.status(400).json({ message: "Bad request" });
+//   }
+// }
 
-            if ( err ) {
-                return reject(err);
-            }
+// const saveFile = async (file: formidable.File): Promise<string> => {
+//   // const data = fs.readFileSync( file.filepath );
+//   // fs.writeFileSync(`./public/${ file.originalFilename }`, data);
+//   // fs.unlinkSync( file.filepath ); // elimina
+//   // return;
+//   const { secure_url } = await cloudinary.uploader.upload(file.filepath);
+//   return secure_url;
+// };
 
-            const filePath = await saveFile( files.file as formidable.File )
-            resolve(filePath);
-        })
+// const parseFiles = async (req: NextApiRequest): Promise<string> => {
+//   return new Promise((resolve, reject) => {
+//     const form = new formidable.IncomingForm();
+//     form.parse(req, async (err: any, fields: any, files: any) => {
+//       // console.log({ err, fields, files });
 
-    }) 
+//       if (err) {
+//         return reject(err);
+//       }
 
-}
+//       const filePath = await saveFile(files.file as formidable.File);
+//       resolve(filePath);
+//     });
+//   });
+// };
 
+// const uploadFile = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+//   const imageUrl = await parseFiles(req);
 
-const uploadFile = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
-    
-    const imageUrl = await parseFiles(req);
-    
-    return res.status(200).json({ message: imageUrl });
-
-}
+//   return res.status(200).json({ message: imageUrl });
+// };

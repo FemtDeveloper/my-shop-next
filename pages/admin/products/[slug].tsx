@@ -1,7 +1,6 @@
 import { ChangeEvent, FC, useEffect, useRef, useState } from "react";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
-import { useForm } from "react-hook-form";
 
 import {
   Box,
@@ -35,6 +34,7 @@ import { IProduct } from "../../../interfaces";
 import { dbProducts } from "../../../database";
 import { tesloApi } from "../../../api";
 import { Product } from "../../../models";
+import { useForm } from "react-hook-form";
 
 const validTypes = ["shirts", "pants", "hoodies", "hats"];
 const validGender = ["men", "women", "kid", "unisex"];
@@ -127,7 +127,6 @@ const ProductAdminPage: FC<Props> = ({ product }) => {
     }
 
     try {
-      // console.log( file );
       for (const file of target.files) {
         const formData = new FormData();
         formData.append("file", file);
