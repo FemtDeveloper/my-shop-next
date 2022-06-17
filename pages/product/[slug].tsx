@@ -17,7 +17,6 @@ interface Props {
 const ProductPage: NextPage<Props> = ({ product }) => {
   const { addProductToCart } = useContext(CartContext);
   const router = useRouter();
-  console.log(product.images);
 
   const [tempCartProduct, setTempCartProduct] = useState<ICartProduct>({
     _id: product._id,
