@@ -1,11 +1,9 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-<<<<<<< HEAD
 mongo/
 
 .env
-=======
->>>>>>> 5751549a0b794882a1142dcf0b5aa7d3dbdbed0a
-
+.env.development
+.env.production
 # dependencies
 /node_modules
 /.pnp
