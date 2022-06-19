@@ -36,11 +36,15 @@ export const Navbar = () => {
 
   return (
     <AppBar>
-      <Toolbar>
+      <Toolbar style={{ backgroundColor: "indigo" }}>
         <NextLink href="/" passHref>
           <Link display="flex" alignItems="center">
-            <Typography variant="h1">Madrugón</Typography>
-            <Typography sx={{ ml: 0.2 }}>Mayorista</Typography>
+            <Typography variant="h1" color={"whitesmoke"}>
+              Madrugón |
+            </Typography>
+            <Typography sx={{ ml: 0.2 }} color={"whitesmoke"}>
+              Mayorista
+            </Typography>
           </Link>
         </NextLink>
         <Box flex={1} />
@@ -54,7 +58,11 @@ export const Navbar = () => {
           <NextLink href="/category/men" passHref>
             <Link>
               <Button
-                color={pathname === "/category/men" ? "primary" : "success"}
+                sx={{
+                  backgroundColor:
+                    pathname === "/category/men" ? "whitesmoke" : "indigo",
+                  color: pathname === "/category/men" ? "indigo" : "whitesmoke",
+                }}
               >
                 Hombres
               </Button>
@@ -63,7 +71,12 @@ export const Navbar = () => {
           <NextLink href="/category/women" passHref>
             <Link>
               <Button
-                color={pathname === "/category/women" ? "primary" : "success"}
+                sx={{
+                  backgroundColor:
+                    pathname === "/category/women" ? "whitesmoke" : "indigo",
+                  color:
+                    pathname === "/category/women" ? "indigo" : "whitesmoke",
+                }}
               >
                 Mujeres
               </Button>
@@ -72,7 +85,12 @@ export const Navbar = () => {
           <NextLink href="/category/kids" passHref>
             <Link>
               <Button
-                color={pathname === "/category/kids" ? "primary" : "success"}
+                sx={{
+                  backgroundColor:
+                    pathname === "/category/kids" ? "whitesmoke" : "indigo",
+                  color:
+                    pathname === "/category/kids" ? "indigo" : "whitesmoke",
+                }}
               >
                 Niños/as
               </Button>
@@ -94,7 +112,7 @@ export const Navbar = () => {
             endAdornment={
               <InputAdornment position="end">
                 <IconButton onClick={() => setIsSearchVisible(false)}>
-                  <ClearOutlined />
+                  <ClearOutlined sx={{ color: "whitesmoke" }} />
                 </IconButton>
               </InputAdornment>
             }
@@ -105,7 +123,7 @@ export const Navbar = () => {
             className="fadeIn"
             sx={{ display: { xs: "none", sm: "flex" } }}
           >
-            <SearchOutlined />
+            <SearchOutlined sx={{ color: "whitesmoke" }} />
           </IconButton>
         )}
         <IconButton
@@ -116,7 +134,7 @@ export const Navbar = () => {
         </IconButton>
         <NextLink href="/cart" passHref>
           <Link>
-            <IconButton>
+            <IconButton sx={{ color: "whitesmoke" }}>
               <Badge badgeContent={numberOfItems} color="secondary">
                 <ShoppingCartOutlined />
               </Badge>

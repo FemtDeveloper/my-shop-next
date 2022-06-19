@@ -8,6 +8,7 @@ import { SWRConfig } from "swr";
 
 import { lightTheme } from "../themes";
 import { AuthProvider, CartProvider, UiProvider } from "../context";
+import Head from "next/head";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -34,6 +35,9 @@ function MyApp({ Component, pageProps }: AppProps) {
             >
               <UiProvider isMenuOpen={false}>
                 <ThemeProvider theme={lightTheme}>
+                  <Head>
+                    <link rel="shortcut icon" href="/mm.png" />
+                  </Head>
                   <CssBaseline />
                   <Component {...pageProps} />
                 </ThemeProvider>
