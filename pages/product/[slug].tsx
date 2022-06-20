@@ -69,7 +69,7 @@ const ProductPage: NextPage<Props> = ({ product }) => {
         <Grid item xs={12} sm={5}>
           <Box display="flex" flexDirection="column">
             {/* titulos */}
-            <Typography variant="h1" component="h1">
+            <Typography variant="h1" component="h1" sx={{ color: "darkcyan" }}>
               {product.title}
             </Typography>
             <Typography
@@ -96,9 +96,9 @@ const ProductPage: NextPage<Props> = ({ product }) => {
             {/* Agregar al carrito */}
             {product.inStock > 0 ? (
               <Button
-                color="secondary"
                 className="circular-btn"
                 onClick={onAddProduct}
+                sx={{ backgroundColor: "darkcyan" }}
               >
                 {tempCartProduct.size
                   ? "Agregar al carrito"

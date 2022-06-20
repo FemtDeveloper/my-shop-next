@@ -15,6 +15,9 @@ export const lightTheme = createTheme({
     success: {
       main: "#f9f9f900",
     },
+    error: {
+      main: "#db1010",
+    },
   },
   components: {
     MuiLink: {
@@ -70,7 +73,7 @@ export const lightTheme = createTheme({
           boxShadow: "none",
           borderRadius: 10,
           ":hover": {
-            backgroundColor: "rgba(80,0,116,0.7)",
+            backgroundColor: "#007070",
             transition: "all 0.3s ease-in-out",
           },
         },

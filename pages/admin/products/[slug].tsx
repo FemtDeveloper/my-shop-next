@@ -185,7 +185,7 @@ const ProductAdminPage: FC<Props> = ({ product }) => {
           <Button
             color="secondary"
             startIcon={<SaveOutlined />}
-            sx={{ width: "150px" }}
+            sx={{ width: "150px", backgroundColor: "darkcyan" }}
             type="submit"
             disabled={isSaving}
           >
@@ -367,10 +367,9 @@ const ProductAdminPage: FC<Props> = ({ product }) => {
             <Box display="flex" flexDirection="column">
               <FormLabel sx={{ mb: 1 }}>Imágenes</FormLabel>
               <Button
-                color="secondary"
                 fullWidth
                 startIcon={<UploadOutlined />}
-                sx={{ mb: 3 }}
+                sx={{ mb: 3, backgroundColor: "darkcyan" }}
                 onClick={() => fileInputRef.current?.click()}
               >
                 Cargar imagen

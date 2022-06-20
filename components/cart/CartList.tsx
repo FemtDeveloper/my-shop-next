@@ -58,8 +58,10 @@ export const CartList: FC<Props> = ({ editable = false, products }) => {
           </Grid>
           <Grid item xs={7}>
             <Box display="flex" flexDirection="column">
-              <Typography variant="body1">{product.title}</Typography>
-              <Typography variant="body1">
+              <Typography variant="body1" sx={{ color: "darkcyan" }}>
+                {product.title}
+              </Typography>
+              <Typography variant="body1" sx={{ color: "darkcyan" }}>
                 Talla: <strong>{product.size}</strong>
               </Typography>
 
@@ -86,12 +88,16 @@ export const CartList: FC<Props> = ({ editable = false, products }) => {
             alignItems="center"
             flexDirection="column"
           >
-            <Typography variant="subtitle1">{`$${product.price}`}</Typography>
+            <Typography
+              variant="subtitle1"
+              sx={{ color: "darkcyan" }}
+            >{`$${product.price}`}</Typography>
 
             {editable && (
               <Button
+                className="remove-btn"
                 variant="text"
-                color="secondary"
+                sx={{ color: "red", backgroundColor: "white" }}
                 onClick={() => removeCartProduct(product as ICartProduct)}
               >
                 Remover

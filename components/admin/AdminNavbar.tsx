@@ -10,11 +10,29 @@ export const AdminNavbar = () => {
 
   return (
     <AppBar>
-      <Toolbar>
+      <Toolbar style={{ backgroundColor: "darkcyan" }}>
         <NextLink href="/" passHref>
           <Link display="flex" alignItems="center">
-            <Typography variant="h1">Madrugón |</Typography>
-            <Typography sx={{ ml: 0.2 }}>Mayorista</Typography>
+            <Typography
+              variant="h1"
+              sx={{ display: { xs: "flex", sm: "none" } }}
+              color="whitesmoke"
+            >
+              M | m
+            </Typography>
+            <Typography
+              variant="h1"
+              color={"whitesmoke"}
+              sx={{ display: { xs: "none", sm: "flex" } }}
+            >
+              Madrugón |
+            </Typography>
+            <Typography
+              color="whitesmoke"
+              sx={{ ml: 0.2, display: { xs: "none", sm: "flex" } }}
+            >
+              Mayorista
+            </Typography>
           </Link>
         </NextLink>
 

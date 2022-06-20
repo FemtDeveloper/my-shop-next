@@ -32,7 +32,7 @@ const CartPage = () => {
       title={`Carrito de compras ${numberOfItems}`}
       pageDescription="Carrito de compras de la tienda"
     >
-      <Typography variant="h1" component="h1">
+      <Typography variant="h1" component="h1" sx={{ color: "darkcyan" }}>
         Carrito de compras
       </Typography>
 
@@ -43,15 +43,17 @@ const CartPage = () => {
         <Grid item xs={12} sm={5}>
           <Card className="summary-card">
             <CardContent>
-              <Typography variant="h2">Order</Typography>
+              <Typography variant="h2" sx={{ color: "darkcyan" }}>
+                Order
+              </Typography>
               <Divider sx={{ marginY: 2 }} />
               <OrderSummary />
               <Box sx={{ mt: 2 }}>
                 <Button
-                  color="secondary"
                   className="circular-btn"
                   fullWidth
                   href="/checkout/address"
+                  sx={{ backgroundColor: "darkcyan" }}
                 >
                   Checkout
                 </Button>{" "}

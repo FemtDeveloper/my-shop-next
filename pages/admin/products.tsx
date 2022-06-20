@@ -69,8 +69,9 @@ const ProductsPage = () => {
       <Box display="flex" justifyContent="end" sx={{ mb: 2 }}>
         <Button
           startIcon={<AddOutlined />}
-          color="secondary"
+          // color="secondary"
           href="/admin/products/new"
+          sx={{ backgroundColor: "darkcyan" }}
         >
           Crear producto
         </Button>

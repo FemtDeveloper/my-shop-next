@@ -14,10 +14,10 @@ const HomePage: NextPage = () => {
       title={"Madrugon Mayorista"}
       pageDescription={"Promociones del Madrugón en Bogotá"}
     >
-      <Typography variant="h1" component="h1">
+      <Typography variant="h1" component="h1" color={"#4e4e4e"}>
         Tienda
       </Typography>
-      <Typography variant="h2" sx={{ mb: 1 }}>
+      <Typography variant="h2" sx={{ mb: 1 }} color={"#4e4e4e"}>
         Todos los productos:
       </Typography>
       {isLoading ? <FullScreenLoading /> : <ProductList products={products} />}

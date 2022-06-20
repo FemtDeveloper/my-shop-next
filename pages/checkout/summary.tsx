@@ -122,11 +122,11 @@ const SummaryPage = () => {
 
               <Box sx={{ mt: 3 }} display="flex" flexDirection="column">
                 <Button
-                  color="secondary"
                   className="circular-btn"
                   fullWidth
                   onClick={onCreateOrder}
                   disabled={isPosting}
+                  sx={{ backgroundColor: "darkcyan" }}
                 >
                   Confirmar Orden
                 </Button>

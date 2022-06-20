@@ -80,7 +80,10 @@ const LoginPage = () => {
       <AuthLayout title={"Login"}>
         <form onSubmit={handleSubmit(onLoginUser)} noValidate>
           <Box
-            sx={{ width: 350, padding: "10px 20px" }}
+            sx={{
+              padding: "10px 20px",
+              width: { sm: 360 },
+            }}
             mt={18}
             display="flex"
             justifyContent="center"
@@ -135,7 +138,7 @@ const LoginPage = () => {
                   fullWidth
                   sx={{
                     mb: 2,
-                    backgroundColor: "indigo",
+                    backgroundColor: "darkcyan",
                   }}
                 >
                   Ingresar
@@ -166,7 +169,7 @@ const LoginPage = () => {
                   fullWidth
                   sx={{
                     mb: 2,
-                    backgroundColor: "indigo",
+                    backgroundColor: "darkcyan",
                   }}
                 >
                   <GitHubIcon sx={{ mr: 2 }} />
@@ -178,7 +181,7 @@ const LoginPage = () => {
                   fullWidth
                   sx={{
                     mb: 2,
-                    backgroundColor: "indigo",
+                    backgroundColor: "darkcyan",
                   }}
                 >
                   <FacebookIcon sx={{ mr: 2 }} />
@@ -189,7 +192,7 @@ const LoginPage = () => {
                   fullWidth
                   sx={{
                     mb: 2,
-                    backgroundColor: "indigo",
+                    backgroundColor: "darkcyan",
                   }}
                   variant="outlined"
                 >

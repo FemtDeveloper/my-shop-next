@@ -129,7 +129,7 @@ const RegisterPage = () => {
                   fullWidth
                   sx={{
                     mb: 2,
-                    backgroundColor: "indigo",
+                    backgroundColor: "#4e4e4e",
                   }}
                 >
                   Ingresar

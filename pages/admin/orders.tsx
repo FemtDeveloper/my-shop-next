@@ -7,13 +7,14 @@ import { AdminLayout } from "../../components/layouts";
 import { IOrder, IUser } from "../../interfaces";
 
 const columns: GridColDef[] = [
-  { field: "id", headerName: "Orden ID", width: 250 },
+  { field: "id", headerName: "Orden ID", width: 220 },
   { field: "email", headerName: "Correo", width: 250 },
   { field: "name", headerName: "Nombre Completo", width: 300 },
-  { field: "total", headerName: "Monto total", width: 300 },
+  { field: "total", headerName: "Monto total", width: 100, align: "right" },
   {
     field: "isPaid",
     headerName: "Pagada",
+    width: 120,
     renderCell: ({ row }: GridValueGetterParams) => {
       return row.isPaid ? (
         <Chip variant="outlined" label="Pagada" color="success" />
@@ -26,7 +27,7 @@ const columns: GridColDef[] = [
     field: "noProducts",
     headerName: "No.Productos",
     align: "center",
-    width: 150,
+    width: 110,
   },
   {
     field: "check",
@@ -39,7 +40,7 @@ const columns: GridColDef[] = [
       );
     },
   },
-  { field: "createdAt", headerName: "Creada en", width: 300 },
+  { field: "createdAt", headerName: "Creada en", width: 200 },
 ];
 
 const OrdersPage = () => {
@@ -51,7 +52,7 @@ const OrdersPage = () => {
     id: order._id,
     email: (order.user as IUser).email,
     name: (order.user as IUser).name,
-    total: order.total,
+    total: `$ ${order.total}`,
     isPaid: order.isPaid,
     noProducts: order.numberOfItems,
     createdAt: order.createdAt,

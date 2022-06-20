@@ -185,9 +185,8 @@ const AddressPage = (data: FormData) => {
         </Grid>
         <Box display="flex" justifyContent="end" sx={{ mt: 5 }}>
           <Button
-            color="secondary"
             className="circular-btn"
-            sx={{ fontSize: "18px" }}
+            sx={{ fontSize: "18px", backgroundColor: "darkcyan" }}
             type="submit"
           >
             Revisar pedido
