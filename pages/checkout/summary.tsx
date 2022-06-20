@@ -70,25 +70,25 @@ const SummaryPage = () => {
       title="Resumen de orden"
       pageDescription={"Resumen de la orden"}
     >
-      <Typography variant="h1" component="h1">
+      <Typography variant="h1" component="h1" sx={{ color: "#007070" }}>
         Resumen de la orden
       </Typography>
 
       <Grid container>
-        <Grid item xs={12} sm={7}>
+        <Grid item xs={12} sm={7} mt={2}>
           <CartList />
         </Grid>
         <Grid item xs={12} sm={5}>
           <Card className="summary-card">
             <CardContent>
-              <Typography variant="h2">
+              <Typography variant="h2" sx={{ color: "#007070" }}>
                 Resumen ({numberOfItems}{" "}
                 {numberOfItems === 1 ? "producto" : "productos"})
               </Typography>
               <Divider sx={{ my: 1 }} />
 
               <Box display="flex" justifyContent="space-between">
-                <Typography variant="subtitle1">
+                <Typography variant="subtitle1" sx={{ color: "#007070" }}>
                   Dirección de entrega
                 </Typography>
                 <NextLink href="/checkout/address" passHref>
@@ -96,19 +96,19 @@ const SummaryPage = () => {
                 </NextLink>
               </Box>
 
-              <Typography>
+              <Typography sx={{ color: "#007070" }}>
                 {firstName} {lastName}
               </Typography>
-              <Typography>
+              <Typography sx={{ color: "#007070" }}>
                 {address}
                 {address2 ? `, ${address2}` : ""}{" "}
               </Typography>
-              <Typography>
+              <Typography sx={{ color: "#007070" }}>
                 {city}, {zip}
               </Typography>
               {/* <Typography>{ countries.find( c => c.code === country )?.name }</Typography> */}
-              <Typography>{country}</Typography>
-              <Typography>{phone}</Typography>
+              <Typography sx={{ color: "#007070" }}>{country}</Typography>
+              <Typography sx={{ color: "#007070" }}>{phone}</Typography>
 
               <Divider sx={{ my: 1 }} />
 

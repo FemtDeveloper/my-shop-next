@@ -32,7 +32,7 @@ const CartPage = () => {
       title={`Carrito de compras ${numberOfItems}`}
       pageDescription="Carrito de compras de la tienda"
     >
-      <Typography variant="h1" component="h1" sx={{ color: "darkcyan" }}>
+      <Typography variant="h1" component="h1" sx={{ color: "darkcyan" }} mb={3}>
         Carrito de compras
       </Typography>
 

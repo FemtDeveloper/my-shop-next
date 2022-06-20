@@ -71,12 +71,15 @@ const AddressPage = (data: FormData) => {
       title="Datos de envío"
       pageDescription="Datos de envió del comprador"
     >
-      <form onSubmit={handleSubmit(onSubmitAddress)}>
+      <form
+        onSubmit={handleSubmit(onSubmitAddress)}
+        style={{ padding: "0 30px" }}
+      >
         <Typography variant="h1" component="h1">
           Dirección
         </Typography>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6} sx={{ mt: 2 }}>
+        <Grid container spacing={4} xs="auto" sm={10} margin="0 auto">
+          <Grid item xs={12} sm={6} sx={{ mt: 1 }}>
             <TextField
               label="Nombre"
               variant="filled"
@@ -88,7 +91,7 @@ const AddressPage = (data: FormData) => {
               helperText={errors.firstName?.message}
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{ mt: 2 }}>
+          <Grid item xs={12} sm={6} sx={{ mt: 1 }}>
             <TextField
               label="Apellido"
               variant="filled"
@@ -100,7 +103,7 @@ const AddressPage = (data: FormData) => {
               helperText={errors.lastName?.message}
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{ mt: 2 }}>
+          <Grid item xs={12} sm={6} sx={{ mt: 1 }}>
             <TextField
               label="Dirección"
               variant="filled"
@@ -112,7 +115,7 @@ const AddressPage = (data: FormData) => {
               helperText={errors.address?.message}
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{ mt: 2 }}>
+          <Grid item xs={12} sm={6} sx={{ mt: 1 }}>
             <TextField
               label="Dirección 2 (opcional)"
               variant="filled"
@@ -120,7 +123,7 @@ const AddressPage = (data: FormData) => {
               {...register("address2")}
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{ mt: 2 }}>
+          <Grid item xs={12} sm={6} sx={{ mt: 1 }}>
             <TextField
               label="Código postal"
               variant="filled"
@@ -132,7 +135,7 @@ const AddressPage = (data: FormData) => {
               helperText={errors.zip?.message}
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{ mt: 2 }}>
+          <Grid item xs={12} sm={6} sx={{ mt: 1 }}>
             <TextField
               label="Ciudad"
               variant="filled"
@@ -144,7 +147,7 @@ const AddressPage = (data: FormData) => {
               helperText={errors.city?.message}
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{ mt: 2 }}>
+          <Grid item xs={12} sm={6} sx={{ mt: 1 }}>
             <Controller
               name="country"
               control={control}
@@ -170,7 +173,7 @@ const AddressPage = (data: FormData) => {
               )}
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{ mt: 2 }}>
+          <Grid item xs={12} sm={6} sx={{ mt: 1 }}>
             <TextField
               label="Teléfono"
               variant="filled"

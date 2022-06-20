@@ -74,7 +74,7 @@ export const CartList: FC<Props> = ({ editable = false, products }) => {
                   }
                 />
               ) : (
-                <Typography variant="h5">
+                <Typography variant="h5" sx={{ color: "darkcyan" }}>
                   {product.quantity}{" "}
                   {product.quantity > 1 ? "productos" : "producto"}
                 </Typography>
@@ -97,7 +97,7 @@ export const CartList: FC<Props> = ({ editable = false, products }) => {
               <Button
                 className="remove-btn"
                 variant="text"
-                sx={{ color: "red", backgroundColor: "white" }}
+                sx={{ color: "red", backgroundColor: "transparent" }}
                 onClick={() => removeCartProduct(product as ICartProduct)}
               >
                 Remover

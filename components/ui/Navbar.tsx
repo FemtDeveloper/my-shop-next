@@ -47,7 +47,7 @@ export const Navbar = () => {
               M | M
             </Typography>
             <Typography
-              variant="h6"
+              variant="h1"
               color={"whitesmoke"}
               sx={{ display: { xs: "none", sm: "flex" } }}
             >
@@ -56,6 +56,7 @@ export const Navbar = () => {
             <Typography
               sx={{ ml: 0.2, display: { xs: "none", sm: "flex" } }}
               color={"whitesmoke"}
+              variant="h2"
             >
               Mayorista
             </Typography>
