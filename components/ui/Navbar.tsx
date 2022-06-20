@@ -46,20 +46,27 @@ export const Navbar = () => {
             >
               M | M
             </Typography>
-            <Typography
-              variant="h1"
-              color={"whitesmoke"}
-              sx={{ display: { xs: "none", sm: "flex" } }}
+            <Box
+              sx={{
+                display: { xs: "none", sm: "flex" },
+                flexDirection: { sm: "column", md: "row" },
+              }}
             >
-              Madrugón |
-            </Typography>
-            <Typography
-              sx={{ ml: 0.2, display: { xs: "none", sm: "flex" } }}
-              color={"whitesmoke"}
-              variant="h2"
-            >
-              Mayorista
-            </Typography>
+              <Typography
+                variant="h1"
+                color={"whitesmoke"}
+                sx={{ fontSize: { sm: 17, md: 26 } }}
+              >
+                Madrugón |
+              </Typography>
+              <Typography
+                color={"whitesmoke"}
+                variant="h2"
+                sx={{ fontSize: { sm: 15, md: 20 } }}
+              >
+                Mayorista
+              </Typography>
+            </Box>
           </Link>
         </NextLink>
         <Box flex={1} />
@@ -75,9 +82,10 @@ export const Navbar = () => {
               <Button
                 sx={{
                   backgroundColor:
-                    pathname === "/category/men" ? "whitesmoke" : "darkcyan",
-                  color:
-                    pathname === "/category/men" ? "darkcyan" : "whitesmoke",
+                    pathname === "/category/men" ? "#f5f5f517" : "darkcyan",
+                  color: "whitesmoke",
+                  fontSize: { sm: 13, md: 18 },
+                  margin: "0 2px",
                 }}
               >
                 Hombres
@@ -89,9 +97,10 @@ export const Navbar = () => {
               <Button
                 sx={{
                   backgroundColor:
-                    pathname === "/category/women" ? "whitesmoke" : "darkcyan",
-                  color:
-                    pathname === "/category/women" ? "darkcyan" : "whitesmoke",
+                    pathname === "/category/women" ? "#f5f5f517" : "darkcyan",
+                  color: "whitesmoke",
+                  fontSize: { sm: 13, md: 18 },
+                  margin: "0 2px",
                 }}
               >
                 Mujeres
@@ -103,9 +112,10 @@ export const Navbar = () => {
               <Button
                 sx={{
                   backgroundColor:
-                    pathname === "/category/kids" ? "whitesmoke" : "darkcyan",
-                  color:
-                    pathname === "/category/kids" ? "darkcyan" : "whitesmoke",
+                    pathname === "/category/kids" ? "#f5f5f517" : "darkcyan",
+                  color: "whitesmoke",
+                  fontSize: { sm: 13, md: 18 },
+                  margin: "0 2px",
                 }}
               >
                 Niños/as

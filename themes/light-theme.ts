@@ -73,6 +73,9 @@ export const lightTheme = createTheme({
           textTransform: "none",
           boxShadow: "none",
           borderRadius: 10,
+          fontSize: "18px",
+          fontWeight: 600,
+          padding: "3px 15px",
           ":hover": {
             backgroundColor: "#007070",
             transition: "all 0.3s ease-in-out",
