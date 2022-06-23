@@ -3,16 +3,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start && next export",
+    "build": "next buil && next export ",
+    "start": "next start ",
     "lint": "next lint"
   },
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@mui/icons-material": "^5.4.1",
-    "@mui/material": "^5.4.1",
-    "@mui/x-data-grid": "^5.5.1",
     "@paypal/react-paypal-js": "^7.6.0",
     "@types/bcryptjs": "^2.4.2",
     "axios": "^0.26.0",
