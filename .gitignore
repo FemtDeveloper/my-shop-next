@@ -1,9 +1,6 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 mongo/
 
-Dockerfile
-.dockerignore
-
 .env
 .env.development
 .env.production
@@ -18,6 +15,8 @@ Dockerfile
 # next.js
 /.next/
 /out/
+Dockerfile
+.dockerignore
 
 # production
 /build
@@ -30,16 +29,28 @@ Dockerfile
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+<<<<<<< HEAD
 
 # local env files
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+=======
+.pnpm-debug.log*
+
+# local env files
+.env*.local
+>>>>>>> 5751549a0b794882a1142dcf0b5aa7d3dbdbed0a
 
 # vercel
 .vercel
 
 # typescript
 *.tsbuildinfo
+<<<<<<< HEAD
+=======
 
+mongo/
+.env
+>>>>>>> 5751549a0b794882a1142dcf0b5aa7d3dbdbed0a

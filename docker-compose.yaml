@@ -5,4 +5,8 @@ services:
     ports:
       - 27017:27017
     volumes:
+<<<<<<< HEAD
       - ./mongo:/data/db
+=======
+      - ./mongo:/data/db
+>>>>>>> 5751549a0b794882a1142dcf0b5aa7d3dbdbed0a

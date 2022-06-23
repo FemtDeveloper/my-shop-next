@@ -117,7 +117,7 @@ export const SideMenu = () => {
           <ListItem
             button
             sx={{ display: { xs: "", sm: "none" } }}
-            onClick={() => navigateTo("/category/kids")}
+            onClick={() => navigateTo("/category/kid")}
           >
             <ListItemIcon>
               <EscalatorWarningOutlined />
