@@ -3,7 +3,6 @@ const nextConfig = {
   reactStrictMode: true,
   experimental: {
     outputStandalone: true,
-    webpack5: false,
   },
 };
 
