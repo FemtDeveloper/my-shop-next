@@ -6,6 +6,8 @@ import useSWR from "swr";
 
 import { AdminLayout } from "../../components/layouts";
 import { IProduct } from "../../interfaces";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const columns: GridColDef[] = [
   {
@@ -45,6 +47,11 @@ const columns: GridColDef[] = [
 
 const ProductsPage = () => {
   const { data, error } = useSWR<IProduct[]>("/api/admin/products");
+  const session = useSession();
+  const router = useRouter();
+  if (session.status === "unauthenticated") {
+    router.push("/");
+  }
 
   if (!data && !error) return <></>;
 

@@ -8,10 +8,17 @@ import { Grid, Select, MenuItem } from "@mui/material";
 import { AdminLayout } from "../../components/layouts";
 import { IUser } from "../../interfaces";
 import { tesloApi } from "../../api";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const UsersPage = () => {
   const { data, error } = useSWR<IUser[]>("/api/admin/users");
   const [users, setUsers] = useState<IUser[]>([]);
+  const session = useSession();
+  const router = useRouter();
+  if (session.status === "unauthenticated") {
+    router.push("/");
+  }
 
   useEffect(() => {
     if (data) {

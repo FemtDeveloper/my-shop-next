@@ -16,6 +16,8 @@ import { AdminLayout } from "../../components/layouts";
 import { Grid, Typography } from "@mui/material";
 import { SummaryTile } from "../../components/admin";
 import { DashboardSummaryResponse } from "../../interfaces/dashboard";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const DashboardPage = () => {
   const { data, error } = useSWR<DashboardSummaryResponse>(
@@ -24,6 +26,11 @@ const DashboardPage = () => {
       refreshInterval: 30 * 1000, // 30 segundos
     }
   );
+  const session = useSession();
+  const router = useRouter();
+  if (session.status === "unauthenticated") {
+    router.push("/");
+  }
 
   const [refreshIn, setRefreshIn] = useState(30);
 

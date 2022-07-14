@@ -1,6 +1,8 @@
 import { ConfirmationNumberOutlined } from "@mui/icons-material";
 import { Chip, Grid } from "@mui/material";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import useSWR from "swr";
 
 import { AdminLayout } from "../../components/layouts";
@@ -45,6 +47,11 @@ const columns: GridColDef[] = [
 
 const OrdersPage = () => {
   const { data, error } = useSWR<IOrder[]>("/api/admin/orders");
+  const session = useSession();
+  const router = useRouter();
+  if (session.status === "unauthenticated") {
+    router.push("/");
+  }
 
   if (!data && !error) return <></>;
 
