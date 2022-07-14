@@ -38,7 +38,7 @@ async function getProductBySlug(
   product.images = product.images.map((image: any) => {
     return image.includes("http")
       ? image
-      : `${process.env.HOST_NAME}products/${image}`;
+      : `${process.env.NEXTAUTH_URL}products/${image}`;
   });
 
   return res.json(product);
